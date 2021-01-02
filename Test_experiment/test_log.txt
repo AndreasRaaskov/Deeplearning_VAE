@@ -1,0 +1,3 @@
+Test
+>> Using device: GeForce GTX 1050 Ti 
+Epoch 0/10 

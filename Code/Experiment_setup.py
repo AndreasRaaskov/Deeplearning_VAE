@@ -8,9 +8,9 @@ import numpy as np
 import torch
 from torch import nn
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
+np.random.seed(32)
 class VEA_experiment():
-    def __init__(self,Data_train_path,Data_validation_path,batch_size,latent_features,n_batches,input_shape=[19,250]):
+    def __init__(self,Data_loader_train,Data_loader_validation,batch_size,latent_features,n_batches,input_shape=[19,250]):
 
         #setup hyperparameters
         self.batch_size=batch_size
@@ -20,15 +20,12 @@ class VEA_experiment():
 
 
         #Load dataset
-        self.train_set=batch_loader(Data_train_path,device)
-        self.train_set.pre_load()
-
-        self.validation_set=batch_loader(Data_validation_path,device)
-        self.validation_set.pre_load()
+        self.train_set=Data_loader_train
+        self.validation_set=Data_loader_validation
 
 
         #Setup model
-        self.vi = VariationalInference(beta=1.0)
+        self.vi = VariationalInference(beta=0.1)
         self.VAE= VariationalAutoencoder(self.vi,input_shape, latent_features).to(device)
 
         # define dictionary to store the training curves
@@ -109,8 +106,9 @@ class VEA_experiment():
         for batch in range(self.n_batches):
             x, _,_ = self.train_set.load_random(self.batch_size)
 
-            # perform a forward pass through the model and compute the ELBO
-            loss, diagnostics, outputs = self.vi(self.VAE, x)
+            # perform a forward pass
+            # through the model and compute the ELBO
+            loss, diagnostics, self.outputs = self.vi(self.VAE, x)
 
             self.optimizer.zero_grad()
             loss.backward()
@@ -138,6 +136,20 @@ class VEA_experiment():
             # gather data for the validation step
             for k, v in diagnostics.items():
                 self.validation_history[k] += [v.mean().item()]
+
+    def show_plots(self,size):
+        with torch.no_grad():
+            self.VAE.eval()
+
+            # Just load a single batch from the test loader
+            x, y, _ = self.validation_set.load_random(size)
+            x_new=self.VAE.sample(x)
+            # perform a forward pass through the model and compute the ELBO
+            loss, diagnostics, outputs = self.vi(self.VAE, x)
+
+            plot_2d_latents(outputs,y)
+
+
 
 
 

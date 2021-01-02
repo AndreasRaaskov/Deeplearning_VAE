@@ -1,0 +1,39 @@
+Test
+>> Using device: GeForce GTX 1050 Ti 
+VariationalAutoencoder(
+  (vi): VariationalInference()
+  (encoder): Sequential(
+    (0): Linear(in_features=4750, out_features=256, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=256, out_features=128, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=128, out_features=200, bias=True)
+  )
+  (decoder): Sequential(
+    (0): Linear(in_features=100, out_features=128, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=128, out_features=256, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=256, out_features=9500, bias=True)
+  )
+)
+Epoch 0/100 
+Epoch 10/100 
+Epoch 20/100 
+Epoch 30/100 
+Epoch 40/100 
+Epoch 50/100 
+Epoch 60/100 
+Epoch 70/100 
+Epoch 80/100 
+Epoch 90/100 
+Epoch 0/100 
+Epoch 10/100 
+Epoch 20/100 
+Epoch 30/100 
+Epoch 40/100 
+Epoch 50/100 
+Epoch 60/100 
+Epoch 70/100 
+Epoch 80/100 
+Epoch 90/100 

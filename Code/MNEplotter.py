@@ -3,7 +3,7 @@ import numpy as np
 from IPython.display import Image, display, clear_output
 import seaborn as sns
 sns.set_style("whitegrid")
-
+import torch
 class MNEPlotter:
     def __init__(self,CH_names,lableEncoding=[None]):
         if lableEncoding.all==[None]:
@@ -93,6 +93,8 @@ def plot_2d_latents(outputs, y, tmp_img="tmp_vae_latent_space.png", show=True):
     y = y.to('cpu')
     scale_factor = 2
     batch_size = z.shape[0]
+    y=np.array([(yi == 1).nonzero()[0][0] for yi in y])
+    print(z.shape)
     palette = sns.color_palette()
     colors = [palette[l] for l in y]
 
