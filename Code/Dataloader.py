@@ -239,7 +239,8 @@ class preprossing(dataloader):
         edfDict, annothlist = self.anno_mapping(edfDict)
 
         if test_size is None:
-            n_size=int(len(annothlist)*test_ratio)
+            size_per_class = np.min([len(annothlist[i]) for i in range(len(annothlist))])
+            n_size=int(size_per_class*test_ratio*len(annothlist))
         elif test_ratio is None:
             n_size=test_size
         else:
@@ -338,6 +339,8 @@ class batch_loader():
         idx=list(self.data.keys())
         X,Y,meta=self.load(idx,encoded)
         return X,Y,meta
+
+
 
 
 #loader=dataloader(Time_interval=1,Overlap=0)

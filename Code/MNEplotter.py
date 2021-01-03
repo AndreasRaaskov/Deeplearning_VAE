@@ -133,7 +133,6 @@ def plot_batch(x, x_new=[None], y=[None],figsize=(12, 18), tmp_img="test_batchpl
 
     if y != [None]:
         write_lable = True
-        decoding = ["null", "eyem", "chew", "shiv", "elpp", "musc"]
     else:
         write_lable = False
 
@@ -152,7 +151,7 @@ def plot_batch(x, x_new=[None], y=[None],figsize=(12, 18), tmp_img="test_batchpl
                 ax0.plot(x[n][CH])
                 ax1.plot(x_new[n][CH])
             if write_lable:
-                ax0.set_ylabel(decoding[y[n]])
+                ax0.set_ylabel(y[n])
 
             axis[0, 0].set_title("Opservation")
             axis[0, 1].set_title("Reconstruction")

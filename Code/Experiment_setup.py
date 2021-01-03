@@ -10,7 +10,7 @@ from torch import nn
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 np.random.seed(32)
 class VEA_experiment():
-    def __init__(self,Data_loader_train,Data_loader_validation,batch_size,latent_features,n_batches,input_shape=[19,250]):
+    def __init__(self,Data_loader_train,Data_loader_validation,batch_size,latent_features,n_batches,beta,input_shape=[19,250]):
 
         #setup hyperparameters
         self.batch_size=batch_size
@@ -25,7 +25,7 @@ class VEA_experiment():
 
 
         #Setup model
-        self.vi = VariationalInference(beta=0.1)
+        self.vi = VariationalInference(beta=beta)
         self.VAE= VariationalAutoencoder(self.vi,input_shape, latent_features).to(device)
 
         # define dictionary to store the training curves
